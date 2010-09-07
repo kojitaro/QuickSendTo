@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">QuickSendTo</string>
+	<string name="select_email_address_name">メールアドレスを追加する</string>
+	<string name="menu_add_email_address">追加</string>
+	<string name="del_dialog_title">このテンプレートを削除してもよろしいですか?</string>
+	<string name="del_dialog_ok_btn">Ok</string>
+	<string name="del_dialog_cancel_btn">Cancel</string>
+	<string name="edit_template">テンプレートの編集</string>
+	<string name="edittemplate_title">テンプレートのタイトル</string>
+	<string name="edittemplate_mail">To:</string>
+	<string name="edittemplate_subject">サブジェクト</string>
+	<string name="edittemplate_message">メッセージ</string>
+	<string name="edittemplate_btn_save">保存</string>
+	<string name="edittemplate_btn_cancel">キャンセル</string>
+	<string-array name="dialog_edit_template_list">
+	<item>編集</item> 
+	<item>削除</item> 
+	<item>複製</item> 
+	</string-array>
+</resources>
