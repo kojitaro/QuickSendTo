@@ -36,6 +36,7 @@ import android.widget.BaseAdapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
@@ -51,7 +52,7 @@ public class QuickSendTo extends Activity
 	private static final int ACTIVITY_EDIT_TEMPLATE = 0;
 	
 	private DatabaseHelper _dbhelper;
-	Vector<Template> _addressList = new Vector<Template>();
+	Vector<Template> _templateList = new Vector<Template>();
 	ContactAdapter _adapter;
 	
     @Override
@@ -69,7 +70,7 @@ public class QuickSendTo extends Activity
 		contact_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //				ListView listView = (ListView) parent;
-				Template email = (Template) _addressList.get(position);
+				Template email = (Template) _templateList.get(position);
 // 				Log.d(TAG, "onItemClick "+email);
 				
 				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+email._mailaddress)); 
@@ -83,7 +84,7 @@ public class QuickSendTo extends Activity
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 //				ListView listView = (ListView) parent;
 				
- 				final Template email = (Template) _addressList.get(position);
+ 				final Template email = (Template) _templateList.get(position);
             	(new AlertDialog.Builder(QuickSendTo.this))
                 .setTitle(email.toString())
                 .setItems(R.array.dialog_edit_template_list, new DialogInterface.OnClickListener() {
@@ -96,13 +97,13 @@ public class QuickSendTo extends Activity
 							break;
 						case 1:	// Delete
 							{
-				 				Template template = (Template) _addressList.get(position);
+				 				Template template = (Template) _templateList.get(position);
 // 				 				Log.d(TAG, "onItemClick "+email);
 				 				showDeleteDialog(template);
 							}break;
 						case 2:	// Duplicate
 			 				{
-								Template template = (Template) _addressList.get(position);
+								Template template = (Template) _templateList.get(position);
 			 					duplicateEntry(template);
 							}break;
 						}
@@ -116,6 +117,13 @@ public class QuickSendTo extends Activity
 		 
 		
 		reloadList();
+		
+		// Show Toast, if template is empty. 
+		if( _templateList.size() == 0 ){
+			Toast toast =
+				Toast.makeText(getApplicationContext(), R.string.empty_list_toast_message, Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 	
     @Override
@@ -126,7 +134,7 @@ public class QuickSendTo extends Activity
 	
 	private void reloadList()
 	{
-		_addressList.clear();
+		_templateList.clear();
 		
 		SQLiteDatabase db = _dbhelper.getWritableDatabase();
 		String query = "select "
@@ -146,7 +154,7 @@ public class QuickSendTo extends Activity
 			String mailaddress = c.getString(3);
 			String message = c.getString(4);
 			
- 			_addressList.add( new Template(cid, title, subject, mailaddress, message) );
+			_templateList.add( new Template(cid, title, subject, mailaddress, message) );
 			
 			b = c.moveToNext();
 		}
@@ -163,7 +171,7 @@ public class QuickSendTo extends Activity
 		SQLiteDatabase db = _dbhelper.getWritableDatabase();
 		db.delete(DatabaseHelper.TABLE_NAME, BaseColumns._ID+"=?", args);
 		
-		_addressList.remove(emailAddress);
+		_templateList.remove(emailAddress);
 		_adapter.notifyDataSetChanged();
 	}
 
@@ -202,7 +210,7 @@ public class QuickSendTo extends Activity
         }
 
         public int getCount() {
-            return _addressList.size();
+            return _templateList.size();
         }
 
         public Object getItem(int position) {
@@ -214,7 +222,7 @@ public class QuickSendTo extends Activity
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-			Template email = _addressList.get(position);
+			Template email = _templateList.get(position);
 			
 			LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(R.layout.selecttemplate_entry, null);

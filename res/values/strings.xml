@@ -8,7 +8,7 @@
 	<string name="del_dialog_cancel_btn">Cancel</string>
 	<string name="edit_template">Edit template</string>
 	<string name="edittemplate_title">Template title</string>
-	<string name="edittemplate_mail">To:</string>
+	<string name="edittemplate_mail">To</string>
 	<string name="edittemplate_subject">Subject</string>
 	<string name="edittemplate_message">Message</string>
 	<string name="edittemplate_btn_save">Save</string>
@@ -18,4 +18,5 @@
 	<item>Delete</item> 
 	<item>Duplicate</item> 
 	</string-array>
+	<string name="empty_list_toast_message">Press the menu button and select "Add". You can add a template.</string>
 </resources>

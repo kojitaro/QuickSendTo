@@ -18,4 +18,5 @@
 	<item>削除</item> 
 	<item>複製</item> 
 	</string-array>
+	<string name="empty_list_toast_message">メニューボタンを押して「追加」を選択すると。テンプレートを追加できます。</string>
 </resources>
