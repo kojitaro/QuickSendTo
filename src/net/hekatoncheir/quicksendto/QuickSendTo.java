@@ -25,7 +25,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.Intent;
-import android.util.Log;
 import android.net.Uri;
 
 import android.view.View;
@@ -46,13 +45,13 @@ import java.util.Vector;
 
 public class QuickSendTo extends Activity
 {
-    private final String TAG = "QuickSendTo.SelectEmailAddress";
+//    private final String TAG = "QuickSendTo.SelectEmailAddress";
 
 	private static final int MENU_ID_ADD_EMAIL_ADDRESS = 0;
 	private static final int ACTIVITY_EDIT_TEMPLATE = 0;
 	
 	private DatabaseHelper _dbhelper;
-	Vector<Template> _addressList = new 	Vector<Template>();
+	Vector<Template> _addressList = new Vector<Template>();
 	ContactAdapter _adapter;
 	
     @Override
@@ -68,9 +67,8 @@ public class QuickSendTo extends Activity
 		ListView contact_list = (ListView)findViewById(R.id.contact_list);
 		contact_list.setAdapter(_adapter);
 		contact_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ListView listView = (ListView) parent;
+//				ListView listView = (ListView) parent;
 				Template email = (Template) _addressList.get(position);
 // 				Log.d(TAG, "onItemClick "+email);
 				
@@ -83,7 +81,7 @@ public class QuickSendTo extends Activity
 		
 		contact_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-				ListView listView = (ListView) parent;
+//				ListView listView = (ListView) parent;
 				
  				final Template email = (Template) _addressList.get(position);
             	(new AlertDialog.Builder(QuickSendTo.this))
@@ -237,7 +235,6 @@ public class QuickSendTo extends Activity
 		alertDialogBuilder.setTitle( r.getString(R.string.del_dialog_title));
 		alertDialogBuilder.setMessage(template.toString());
 		alertDialogBuilder.setPositiveButton(r.getString(R.string.del_dialog_ok_btn), new DialogInterface.OnClickListener() {
-			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				deleteFromList(template);
 			}});

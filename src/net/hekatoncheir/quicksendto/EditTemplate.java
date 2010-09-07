@@ -1,12 +1,3 @@
-package net.hekatoncheir.quicksendto;
-
-import android.app.Activity;
-import android.os.Bundle;
-
-import android.content.Intent;
-
-import android.widget.Button;
-import android.widget.ImageButton;
 /*
  * Copyright (C) 2010 Kouji Ohura
  *
@@ -23,7 +14,23 @@ import android.widget.ImageButton;
  * limitations under the License.
  */
 
+package net.hekatoncheir.quicksendto;
+
+import java.util.Vector;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import android.content.Intent;
+
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+
+
+
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.view.View;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -40,10 +47,11 @@ public class EditTemplate extends Activity
 	ImageButton _btn_mailselect;
 	Button _btn_save;
 	Button _btn_cancel;
-	EditText _mail;
 	EditText _title;
 	EditText _subject;
 	EditText _message;
+	
+	MultiAutoCompleteTextView _mail;
 	
 	boolean _isUpdate;
 	long _template_id;
@@ -57,16 +65,16 @@ public class EditTemplate extends Activity
 		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edittemplate);
-		
-		_btn_mailselect = (ImageButton)findViewById(R.id.edittemplate_btn_mailselect);
-		_btn_mailselect.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View view){
-				startActivityForResult( new Intent(EditTemplate.this, SelectEmailAddress.class), ACTIVITY_ID_SELECT_EMAIL);
-			}
-		});
-		_btn_mailselect.setImageResource (android.R.drawable.ic_dialog_email);
-
-		_btn_save = (Button)findViewById(R.id.edittemplate_btn_save);
+        
+        _btn_mailselect = (ImageButton)findViewById(R.id.edittemplate_btn_mailselect);
+        _btn_mailselect.setOnClickListener(new View.OnClickListener(){
+        	public void onClick(View view){
+        		startActivityForResult( new Intent(EditTemplate.this, SelectEmailAddress.class), ACTIVITY_ID_SELECT_EMAIL);
+        				}
+        	});
+        _btn_mailselect.setImageResource (android.R.drawable.ic_dialog_email);
+        
+        _btn_save = (Button)findViewById(R.id.edittemplate_btn_save);
 		_btn_save.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View view){
 				save();
@@ -85,9 +93,15 @@ public class EditTemplate extends Activity
 		
 		
 		_title = (EditText)findViewById(R.id.edittemplate_title);
-		_mail = (EditText)findViewById(R.id.edittemplate_mail);
 		_subject = (EditText)findViewById(R.id.edittemplate_subject);
 		_message = (EditText)findViewById(R.id.edittemplate_message);
+
+		
+		Vector<String> emailAddressList = ContactMailadressListing.listup(this);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, emailAddressList);
+		_mail = (MultiAutoCompleteTextView)findViewById(R.id.edittemplate_mail);
+		_mail.setAdapter(adapter);
+		_mail.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
 		_isUpdate = false;
 		Intent intent = getIntent();
@@ -108,7 +122,7 @@ public class EditTemplate extends Activity
 		Cursor c = db.rawQuery(query, args);
 		boolean b = c.moveToFirst();
 		if (b){
-			long cid = c.getLong (0);
+//			long cid = c.getLong (0);
 			String title = c.getString(1);
 			String subject = c.getString(2);
 			String mailaddress = c.getString(3);
@@ -128,6 +142,10 @@ public class EditTemplate extends Activity
 		if (requestCode == ACTIVITY_ID_SELECT_EMAIL) {
 			if (resultCode == RESULT_OK) {
 				String emailAddress = data.getStringExtra(SelectEmailAddress.INTENT_PARAM_EMAILADDRESS);
+				String o = _mail.getText().toString();
+				if( o.length()>0){
+					emailAddress = o+","+emailAddress;
+				}
 				_mail.setText(emailAddress);
 			}
 		}
@@ -151,4 +169,5 @@ public class EditTemplate extends Activity
 		
 	}
 	
+
 };

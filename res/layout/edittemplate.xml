@@ -15,21 +15,19 @@
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/edittemplate_mail"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-		        android:hint="@string/edittemplate_mail"
-			android:layout_weight="1"
-			android:lines="1"
-			android:singleLine="true"
+			<MultiAutoCompleteTextView
+				android:id="@+id/edittemplate_mail"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+			    android:hint="@string/edittemplate_mail"
+				android:layout_weight="1"
+				/>
+			<ImageButton
+                       android:id="@+id/edittemplate_btn_mailselect"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
 			/>
-		<ImageButton
-			android:id="@+id/edittemplate_btn_mailselect"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-		/>
-	</LinearLayout>
+	</LinearLayout>			
 	<EditText
 		android:id="@+id/edittemplate_subject"
 		android:layout_width="fill_parent"
