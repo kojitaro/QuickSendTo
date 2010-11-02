@@ -73,7 +73,9 @@ public class QuickSendTo extends Activity
 				Template email = (Template) _templateList.get(position);
 // 				Log.d(TAG, "onItemClick "+email);
 				
-				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+email._mailaddress)); 
+				String escapeMailAddress = Uri.encode(email._mailaddress);
+				
+				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+escapeMailAddress)); 
 				intent.putExtra(Intent.EXTRA_SUBJECT, email._subject); 
 				intent.putExtra(Intent.EXTRA_TEXT, email._message); 
 				startActivity(intent);
