@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.content.Context;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.net.Uri;
@@ -40,6 +41,7 @@ import android.widget.Toast;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 
 import java.util.Vector;
@@ -49,6 +51,8 @@ public class QuickSendTo extends Activity
 //    private final String TAG = "QuickSendTo.SelectEmailAddress";
 
 	private static final int MENU_ID_ADD_EMAIL_ADDRESS = 0;
+	private static final int MENU_ID_PREFERENCE = 1;
+	
 	private static final int ACTIVITY_EDIT_TEMPLATE = 0;
 	
 	private DatabaseHelper _dbhelper;
@@ -79,6 +83,12 @@ public class QuickSendTo extends Activity
 				intent.putExtra(Intent.EXTRA_SUBJECT, email._subject); 
 				intent.putExtra(Intent.EXTRA_TEXT, email._message); 
 				startActivity(intent);
+				
+				SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(QuickSendTo.this);
+				boolean finish_onsent = p.getBoolean("finish_onsent", false);
+				if( finish_onsent ){
+					QuickSendTo.this.finish();
+				}
 			}
 		});
 		
@@ -180,8 +190,14 @@ public class QuickSendTo extends Activity
     @Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(Menu.NONE, MENU_ID_ADD_EMAIL_ADDRESS, Menu.NONE, R.string.menu_add_email_address);
-		item.setIcon(android.R.drawable.ic_menu_add);
+		{
+			MenuItem item = menu.add(Menu.NONE, MENU_ID_ADD_EMAIL_ADDRESS, Menu.NONE, R.string.menu_add_email_address);
+			item.setIcon(android.R.drawable.ic_menu_add);
+		}
+		{
+			MenuItem item = menu.add(Menu.NONE, MENU_ID_PREFERENCE, Menu.NONE, R.string.menu_preference);
+			item.setIcon(android.R.drawable.ic_menu_preferences);
+		}
 		return true;
 	}
 
@@ -191,6 +207,10 @@ public class QuickSendTo extends Activity
 		case MENU_ID_ADD_EMAIL_ADDRESS:
 			{
 				startActivityForResult( new Intent(this, EditTemplate.class), ACTIVITY_EDIT_TEMPLATE);
+			}break;
+		case MENU_ID_PREFERENCE:
+			{
+				startActivity( new Intent(this, MainPreferenceActivity.class));
 			}break;
 		}
 		return true;
@@ -208,7 +228,6 @@ public class QuickSendTo extends Activity
 	
     public class ContactAdapter extends BaseAdapter {
         public ContactAdapter(Context c) {
-            _context = c;
         }
 
         public int getCount() {
@@ -233,8 +252,6 @@ public class QuickSendTo extends Activity
 
 			return v;
         }
-
-        private Context _context;
     }
 	
 	public void showDeleteDialog(final Template template)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/preference_etc_title" android:key="main_preference">
+        <CheckBoxPreference
+			android:key="finish_onsent"
+			android:defaultValue="false"
+			android:title="@string/preference_finish_onsent_title"
+			android:summary="@string/preference_finish_onsent_summary" ></CheckBoxPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

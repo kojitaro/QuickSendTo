@@ -3,6 +3,7 @@
 	<string name="app_name">QuickSendTo</string>
 	<string name="select_email_address_name">メールアドレスを追加する</string>
 	<string name="menu_add_email_address">追加</string>
+	<string name="menu_preference">設定</string>
 	<string name="del_dialog_title">このテンプレートを削除してもよろしいですか?</string>
 	<string name="del_dialog_ok_btn">Ok</string>
 	<string name="del_dialog_cancel_btn">Cancel</string>
@@ -19,4 +20,7 @@
 	<item>複製</item> 
 	</string-array>
 	<string name="empty_list_toast_message">メニューボタンを押して「追加」を選択すると。テンプレートを追加できます。</string>
+	<string name="preference_etc_title">その他</string>
+	<string name="preference_finish_onsent_title">送信後終了</string>
+	<string name="preference_finish_onsent_summary">メールを送信した後、アプリケーションを終了します。</string>
 </resources>

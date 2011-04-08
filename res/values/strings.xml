@@ -2,7 +2,8 @@
 <resources>
 	<string name="app_name">QuickSendTo</string>
 	<string name="select_email_address_name">Add email address</string>
-	<string name="menu_add_email_address">Add</string>
+	<string name="menu_add_email_address">Add Template</string>
+	<string name="menu_preference">Preference</string>
 	<string name="del_dialog_title">Do you want to delete this template?</string>
 	<string name="del_dialog_ok_btn">Ok</string>
 	<string name="del_dialog_cancel_btn">Cancel</string>
@@ -19,4 +20,8 @@
 	<item>Duplicate</item> 
 	</string-array>
 	<string name="empty_list_toast_message">Press the menu button and select "Add". You can add a template.</string>
+	<string name="preference_etc_title">その他</string>
+	<string name="preference_finish_onsent_title">Exit after sending
+</string>
+	<string name="preference_finish_onsent_summary">After sending the mail and exit the application.</string>
 </resources>
